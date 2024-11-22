@@ -10,9 +10,11 @@ import (
 
 func main() {
 	v1Module := api.NewV1Route()
+	v2Module := api.NewV2Route()
 	fx.New(
 		fx.Provide(newEcho),
 		v1Module,
+		v2Module,
 		fx.Invoke(func(e *echo.Echo) {}),
 	).Run()
 }

@@ -2,20 +2,18 @@ package api
 
 import (
 	"lazialize/go-echo-sample/internal/echosample/presentation"
-	"lazialize/go-echo-sample/internal/echosample/presentation/controllers"
 
 	"github.com/labstack/echo/v4"
 	"go.uber.org/fx"
 )
 
-func NewV1Route() fx.Option {
+func NewV2Route() fx.Option {
 	return fx.Module(
-		"v1routes",
+		"v2route",
 		fx.Provide(
 			fx.Private,
-			presentation.AsRoute(controllers.NewEchoHandler),
 			fx.Annotate(
-				RegisterRoutes,
+				registerV2Routes,
 				fx.ParamTags("", `group:"routes"`),
 			),
 		),
@@ -23,8 +21,8 @@ func NewV1Route() fx.Option {
 	)
 }
 
-func RegisterRoutes(e *echo.Echo, routes []presentation.Route) *echo.Group {
-	g := e.Group("v1")
+func registerV2Routes(e *echo.Echo, routes []presentation.Route) *echo.Group {
+	g := e.Group("v2")
 
 	for _, route := range routes {
 		g.Add(route.Method(), route.Pattern(), route.Handle)
