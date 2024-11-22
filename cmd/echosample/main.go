@@ -2,14 +2,17 @@ package main
 
 import (
 	"context"
+	"lazialize/go-echo-sample/internal/echosample/presentation/api"
 
 	"github.com/labstack/echo/v4"
 	"go.uber.org/fx"
 )
 
 func main() {
+	v1Module := api.NewV1Route()
 	fx.New(
 		fx.Provide(newEcho),
+		v1Module,
 		fx.Invoke(func(e *echo.Echo) {}),
 	).Run()
 }
